@@ -1,0 +1,64 @@
+﻿@model IEnumerable<Afri_Energy_Connect.Models.Product>
+@{
+    ViewData["Title"] = "Products";
+}
+
+<h1>Products</h1>
+
+<h2 class="text-center mb-5">List of Products</h2>
+
+<div class="row mb-5">
+    <div class="col">
+        <a class="btn btn-primary" asp-controller="Products" asp-action="Create">New product</a>
+    </div>
+    <div class="col">
+        <form method="get" action="@Url.Action("Index", "Products")">
+            <div class="form-group row">
+                <div class="col">
+                    <input type="date" class="form-control" name="filterDate" placeholder="Filter by Date">
+                </div>
+                <div class="col">
+                    <select class="form-control" name="filterCategory">
+                        <option value="">Select Category</option>
+                        <option value="Category1">Category 1</option>
+                        <option value="Category2">Category 2</option>
+                        <!-- Add more options as needed -->
+                    </select>
+                </div>
+                <div class="col">
+                    <button type="submit" class="btn btn-primary">Filter</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Product ID</th>
+            <th>Product Name</th>
+            <th>Product Category</th>
+            <th>Production Date</th>
+            <th>Farmer ID</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>@product.ProductId</td>
+                <td>@product.ProductName</td>
+                <td>@product.ProductCategory</td>
+                <td>@product.ProductionDate.ToShortDateString()</td>
+                <td>@product.FarmerID</td>
+                <td style="white-space:nowrap">
+                    <a class="btn btn-primary btn-sm" asp-controller="Products" asp-action="Edit"
+                       asp-route-id="@product.FarmerID">Edit</a>
+                    <a class="btn btn-danger btn-sm" asp-controller="Products" asp-action="Delete"
+                       asp-route-id="@product.FarmerID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
